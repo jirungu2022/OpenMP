@@ -2,14 +2,13 @@
 #include <math.h>
 #include <omp.h>
 
-#define numThreads 10
+#define numThreads 4
 
-int main(int argc, char **argv)
+// int main(int argc, char **argv)
+int main()
 {
-  int i;
-
   /* Serial Code */
-  printf("List of numbers from 1 to 20: ");
+  printf("Number of threads running in process:\n");
   omp_set_num_threads(numThreads);
 
   /* Enable parallel execution */
@@ -19,10 +18,10 @@ int main(int argc, char **argv)
     int thread_num = omp_get_thread_num();
 
     /* Parallel Code */
-    for(i = 1; i <= 20; i++)
-      // Print numbers from 1 to 20
-      printf("%d %d %d ", i, thread_num, num_threads);
-    printf("\n");
-  }
-return 0;
+      printf("Thread %2d of %2d \n", thread_num, num_threads);
+  } // Implied barrier
+
+  /* Serial Code */
+  printf("Main thread now running in serial execution mode\n");
+  return 0;
 }

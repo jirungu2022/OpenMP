@@ -1,15 +1,18 @@
-CC=gcc
-CFLAGS = -Wall -Wextra -g3
-LDFLAGS = -Wall -Wextra -g3
 OMPFLAGS = -fopenmp
 OMPLIBS = -lgomp
+
+CC = gcc
+CPPFLAGS = -g3 -Wall -Wextra $(OMPFLAGS)
+LDFLAGS = -g3 -Wall -Wextra
 LDLIBS = $(OMPLIBS)
 
-printNumbers:
-	${CC} ${CFLAGS} printNumbers.c -o $@
+all: printNumbers printNumbersOMP
 
-printNumbersOMP:
-	${CC} ${CFLAGS} printNumbersOMP.c -o $@
+printNumbers: printNumbers.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+printNumbersOMP: printNumbersOMP.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 clean:
-	rm -f printNumbers printNumbersOMP
+	rm -f *.o printNumbers printNumbersOMP
